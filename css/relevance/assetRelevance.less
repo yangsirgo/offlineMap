@@ -1,0 +1,213 @@
+//@import "../../global.less";
+@import "../Variants.less";
+
+.content_html {
+    overflow: hidden;
+}
+
+.role-content {
+    width: 100%;
+    height: calc(100% - 1px);
+    border: 1px solid @border_color;
+    background: rgba(119, 212, 245, 0.10);
+    border-radius: 2px;
+    .detail-box {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        border:none;
+        border-left: 1px solid rgba(119, 212, 245, 0.15);
+        font-size: 0;
+        > div {
+            display: inline-block;
+            vertical-align: top;
+            height:100%;
+            box-sizing: border-box;
+            font-size: 14px;
+            color: #C8E7F2;
+        }
+        #maintools {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            height: 30px;
+            //width: 300px;
+            line-height: 30px;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            z-index: 2000;
+            > i {
+                font-size: 18px;
+            }
+        }
+        .info_header {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+            text-align: center;
+            vertical-align: middle;
+            height: 30px;
+            span {
+                display: inline-block;
+                //width: 50px;
+                font-size: 14px;
+                line-height: 30px;
+                color: rgba(200,231,242,0.6);
+                letter-spacing: 0;
+                box-sizing: border-box;
+                &::before {
+                    content: "";
+                    display: inline-block;
+                    width: 6px;
+                    height: 6px;
+                    border-radius: 10px;
+                    margin-right: 7px;
+                    vertical-align: middle;
+                    margin-bottom: 2px;
+                }
+            }
+            .normal {
+                margin-right: 24px;
+                &::before {
+                    background: #1F564E;
+                    border: 2px solid #25C2AA;
+                }
+            }
+            .error {
+                //margin-right: 10px;
+                &::before {
+                    background: rgba(243,48,24,0.30);
+                    border: 2px solid #F33018;
+                }
+            }
+        }
+        #main {
+            width: 100%;
+        }
+    }
+}
+
+.role-box {
+    width: 100%;
+    height: 100%;
+}
+
+.left_list {
+    width: 200px;
+    overflow: auto;
+    height: calc(100% - 56px);
+    float: left;
+    background: rgba(119, 212, 245, 0.05);
+}
+
+.middle_list {
+    margin-top: 24px;
+    width: 200px;
+    overflow: auto;
+    height: calc(100% - 172px);
+    float: left;
+    border-right: 1px solid @border_color;
+}
+
+.right_content {
+    float: left;
+    overflow: auto;
+    width: calc(100% - 200px);
+    height: calc(100% - 57px);
+}
+
+.role-config-tree {
+    height: calc(100% - 24px);
+    position: relative;
+    overflow: auto;
+}
+
+.role-box .left_list ul li, .role-box .middle_list ul li {
+    text-align: center;
+    height: 48px;
+    line-height: 48px;
+    cursor: pointer;
+    color: #C8E7F2;
+    font-size: 14px;
+}
+
+.left_ul li {
+    background: rgba(119, 212, 245, 0.05);
+}
+
+.save_box {
+    position: fixed;
+    bottom: 0;
+    width: calc(100% - 248px);
+    padding: 18px 0 18px 40px;
+    border-top: 1px solid @border_color;
+    box-sizing: border-box;
+    left: 224px;
+    bottom: 24px;
+    z-index: 200;
+}
+
+.left_ul > .l_active {
+    border-left: 3px solid #77D4F5;
+    background: #16233a;
+    color: #7EDDFF !important;
+}
+
+.left_ul li:hover {
+    background: rgba(119, 212, 245, 0.1);
+}
+
+.middle_ul > .m_active {
+    background: url('../../../images/li_bg.png') no-repeat right;
+    background-size: 3px 32px;
+    color: #7EDDFF !important;
+}
+
+.gd-tree {
+    border: none;
+    background-color: unset;
+}
+
+.gd-tree.gd-tree-gray {
+    background-color: unset;
+}
+
+.btn_box {
+    position: relative;
+    bottom: 0;
+    width: 80px;
+}
+
+.btn_box [class*=gd-btn][disabled] {
+    background-color: #437590;
+}
+
+#save_form {
+    height: 100%;
+}
+
+.gd-tree ul .gd-tree-node-content i.icon-right {
+    display: none;
+}
+
+.gd-tree-children .gd-tree-children {
+    margin-left: 30px;
+}
+
+.gd-tree ul .gd-tree-node-content {
+    height: 30px;
+}
+
+.gd-tree-title [class*=icon-] {
+    margin-left: 10px;
+}
+
+.gd-tree ul .gd-tree-node-content span {
+    margin-left: 5px;
+}
+
+.gd-toolbar {
+    border-bottom: 1px solid rgba(119, 212, 245, 0.15);
+}

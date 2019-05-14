@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/gdui.min.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/globals.css">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bdmap/baidumap_offline_v2_load.js"></script>
+    <script src="/js/ckplayer/ckplayer.js"></script>
+    <script type="text/javascript" src="/js/bdmap/tools/TextIconOverlay_min.js"></script>
+    <script type="text/javascript" src="/js/bdmap/tools/MarkerClusterer_min.js"></script>
+    <script type="text/javascript" src="/js/bdmap/tools/AreaRestriction_min.js"></script>
+    <link rel="stylesheet" href="/css/relevance/index.css">
+    <link rel="stylesheet" href="/css/relevance/clickBox.css">
+    <script  type="text/javascript"  src="/js/template/template.js"></script>
+    <script>
+        var _DEV_DOMAIN_ = "";
+    </script>
+</head>
+<body>
+<div id="app">
+    <ul class="status" @click="mapStatusFn($event)">
+        <li class="allboth active" type="CAMERA" assetName="摄像机">摄像头</li>
+        <li class="errorboth"  type="LIGAN"  assetName="立杆">立杆</li>
+        <li class="errorboth"  type="ASSETBOX"  assetName="设备箱">设备箱</li>
+    </ul>
+    <div id="map_demo"></div>
+    <input type="hidden" name="" id="longopen" value="">
+    <input type="hidden" name="" id="latopen" value="">
+    <input type="hidden" name="" id="getzoomed" value="">
+    <div style="display: none">
+        <img src="/images/shebeixiang145x160.gif">
+        <img src="/images/ligan138x255.gif">
+        <img src="/images/qiangji150x300.gif">
+        <img src="/images/qiuji.gif">
+    </div>
+</div>
+<script src="/js/relevance/mapStyle.js"></script>
+<script src="/js/relevance/index.js"></script>
+<script type="text/html" id="assetBoxWrapper">
+    <div class="assetBoxWrapper">
+        <div class="gifpart">
+            <img src="/images/shebeixiang145x160.gif" alt="" width="145" height="160">
+            <div class="gifpart-text">
+                <p>{{sbmc}}</p>
+                <p>{{gdUid}}</p>
+                <p>{{ipv4}}</p>
+            </div>
+        </div>
+        <img src="/images/tableLine.png" style="position: absolute;top: 30px;right: 20px;">
+        <div class="gifpartRight">
+
+            {{if data.cameraList.length == 0 && data.liganList.length == 0 && data.boxList.length == 0}}
+            <div class="none-realtive-data">
+                暂无关联数据
+            </div>
+            {{/if}}
+            {{each data.cameraList as sonItem}}
+            <div class="table-part-item">
+                <table>
+                    {{if sonItem.onlineStatus == 0}}
+                    <tr>
+                        <td class="errorCamera"><i class="icon iconfont icon-VideoCamera"></i></td>
+                        <td>{{sonItem.assetName}}</td>
+                        <td>{{sonItem.IPV4}}</td>
+                    </tr>
+                    {{else}}
+                    <tr>
+                        <td class="normalCamera"><i class="icon iconfont icon-VideoCamera"></i></td>
+                        <td>{{sonItem.assetName}}</td>
+                        <td>{{sonItem.IPV4}}</td>
+                    </tr>
+                    {{/if}}
+
+                </table>
+            </div>
+            {{/each}}
+            {{each data.liganList as sonItem1}}
+            <div class="table-part-item">
+                <i class="icon iconfont icon-stud"></i>
+                <div>
+                    <p>{{sonItem1.assetName}}</p>
+                    <p>{{sonItem1.assetCode}}</p>
+                </div>
+            </div>
+            {{/each}}
+            {{each data.boxList as sonItem2}}
+            <div class="table-part-item">
+                <i class="icon iconfont icon-EquipmentBox"></i>
+                <div>
+                    <p>{{sonItem2.assetName}}</p>
+                    <p>{{sonItem2.assetCode}}</p>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</script>
+<script  type="text/html" id="liGanWrapper">
+    <div class="liGanWrapper">
+        <div class="gifpart">
+            <img src="/images/ligan138x255.gif" alt="" width="138" height="255">
+            <div class="gifpart-text">
+                <p>{{sbmc}}</p>
+                <p>{{gdUid}}</p>
+            </div>
+        </div>
+        <img src="/images/tableLine.png" style="position: absolute;top: 30px;right: 20px;">
+        <div class="gifpartRight">
+            <!--<img src="/images/tableLine.png" style="position: absolute;top: -9px;left: -28px;">-->
+            {{if data.cameraList.length == 0 && data.boxList.length == 0 && data.liganList.length == 0}}
+            <div class="none-realtive-data">
+                暂无关联数据
+            </div>
+            {{/if}}
+            {{each data.cameraList as sonItem}}
+            <div class="table-part-item">
+                <table>
+                    {{if sonItem.onlineStatus == 0}}
+                    <tr>
+                        <td class="errorCamera"><i class="icon iconfont icon-VideoCamera"></i></td>
+                        <td>{{sonItem.assetName}}</td>
+                        <td>{{sonItem.IPV4}}</td>
+                    </tr>
+                    {{else}}
+                    <tr>
+                        <td class="normalCamera"><i class="icon iconfont icon-VideoCamera"></i></td>
+                        <td>{{sonItem.assetName}}</td>
+                        <td>{{sonItem.IPV4}}</td>
+                    </tr>
+                    {{/if}}
+                </table>
+            </div>
+            {{/each}}
+            {{each data.boxList as sonItem1}}
+            <div class="table-part-item">
+                <i class="icon iconfont icon-EquipmentBox"></i>
+                <div>
+                    <p>{{sonItem1.assetName}}</p>
+                    <p>{{sonItem1.assetCode}}</p>
+                </div>
+            </div>
+            {{/each}}
+            {{each data.liganList as sonItem2}}
+            <div class="table-part-item">
+                <i class="icon iconfont icon-stud"></i>
+                <div>
+                    <p>{{sonItem2.assetName}}</p>
+                    <p>{{sonItem2.assetCode}}</p>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</script>
+<script  type="text/html" id="cameraBoxWrapper">
+    <div class="cameraBoxWrapper" >
+        <div class="gifpart">
+            <img src="/images/qiangji150x300.gif" alt="" width="189" height="110">
+            <div class="gifpart-text">
+                <p>{{sbmc}}</p>
+                <p>{{ipv4}}</p>
+            </div>
+        </div>
+        <img src="/images/tableLine.png" style="position: absolute;top: 30px;right: 20px;">
+        <div class="gifpartRight">
+            <!--<img src="/images/tableLine.png" style="position: absolute;top: -9px;left: -28px;">-->
+            {{if data.length == 0}}
+            <div class="none-realtive-data">
+                暂无关联数据
+            </div>
+            {{/if}}
+            {{each data as value i}}
+            <div class="table-part-item">
+                <i class="icon iconfont {{value.typeIcon}}"></i>
+                <!--{{if value.assetType == 2}}
+                <i class="icon iconfont icon-stud"></i>
+                {{else if value.assetType == 3}}
+                <i class="icon iconfont icon-EquipmentBox"></i>
+                {{else if value.assetType == 1}}
+                <i class="icon iconfont icon-VideoCamera"></i>
+                {{/if}}-->
+                <div>
+                    <p>{{value.assetName}}</p>
+                    <p>{{value.IPV4}}</p>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</script>
+<script  type="text/html" id="gifBoxWrapper">
+    <div class="gifBoxWrapper">
+        <div class="gifpart">
+            <img src="/images/qiuji.gif" alt="" width="134" height="168">
+            <div class="gifpart-text">
+                <p>{{sbmc}}</p>
+                <p>{{ipv4}}</p>
+            </div>
+        </div>
+        <img src="/images/tableLine.png" style="position: absolute;top: 30px;right: 20px;">
+        <div class="gifpartRight">
+            <!--<img src="/images/tableLine.png" style="position: absolute;top: -9px;left: -28px;">-->
+            {{if data.length == 0}}
+            <div class="none-realtive-data">
+                暂无关联数据
+            </div>
+            {{/if}}
+            {{each data as value i}}
+            <div class="table-part-item">
+                {{if value.assetType == 2}}
+                <i class="icon iconfont icon-stud"></i>
+                {{else if value.assetType == 3}}
+                <i class="icon iconfont icon-EquipmentBox"></i>
+                {{else if value.assetType == 1}}
+                <i class="icon iconfont icon-VideoCamera"></i>
+                {{/if}}
+                <div>
+                    <p>{{value.assetName}}</p>
+                    <p>{{value.IPV4}}</p>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</script>
+<script type="text/html" id="relateAsset">
+    <style>
+        .gd-layer-body {
+            height: 700px;
+            width: 900px;
+        }
+        #relateAssetDiv {
+            height : calc(100% - 56px);
+            margin: 0 24px;
+        }
+
+        .gd-layer .gd-layer-body .gd-layer-header {
+            border-bottom: 1px solid #243e54;
+        }
+        .gd-layer .gd-layer-body .gd-layer-footer {
+            border-top: 1px solid #243e54;
+        }
+    </style>
+    <div id="relateAssetDiv">
+        <div style="visibility: hidden;position: fixed;z-index: -1;" id="hiddenTree">
+            <div id="tree_box">
+                <gd-tree :config='treeTableConfig' class=""></gd-tree>
+            </div>
+        </div>
+        <gd-toolbar :config="toolbarConfig"></gd-toolbar>
+        <gd-table :config="tableConfig"></gd-table>
+    </div>
+</script>
+</body>
+</html>
